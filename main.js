@@ -1,6 +1,10 @@
 import * as SPLAT from 'gsplat';
 import * as THREE from 'three';
 
+const scale = 1
+const movement_scale = 5
+const initial_z = 14
+
 let trenderer, xrRefSpace, tscene, tcamera;
 const renderer = new SPLAT.WebGLRenderer();
 const scene = new SPLAT.Scene();
@@ -119,4 +123,20 @@ function getXRSessionInit(mode, options) {
       newInit.requiredFeatures = newInit.requiredFeatures.concat( sessionInit.requiredFeatures );
   }
   return newInit;
+}
+
+function onXRFrame(t, frame) {
+  const session = frame.session;
+  session.requestAnimationFrame(onXRFrame);
+  const baseLayer = session.renderState.baseLayer;
+  const pose = frame.getViewerPose(xrRefSpace);
+
+  trenderer.render( tscene, tcamera );  
+  camera._position.x = scale*movement_scale*tcamera.position.x;
+  camera._position.y = -scale*movement_scale*tcamera.position.y-1;
+  camera._position.z = -scale*movement_scale*tcamera.position.z-initial_z;
+  camera._rotation.x = tcamera.quaternion.x;
+  camera._rotation.y = -tcamera.quaternion.y;
+  camera._rotation.z = -tcamera.quaternion.z;
+  camera._rotation.w = tcamera.quaternion.w;
 }

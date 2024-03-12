@@ -12,7 +12,7 @@
     "vite": "^5.1.4"
   },
   "dependencies": {
-    "gsplat": "^1.0.6",
+    "gsplat": "^1.1.0",
     "three": "^0.162.0"
   }
 }

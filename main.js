@@ -75,7 +75,7 @@ async function main()
 function init() {
   tscene = new THREE.Scene();
   tcamera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.01, 50 );
-  trenderer = new THREE.WebGLRenderer( {antialias: true });
+  trenderer = new THREE.WebGLRenderer( {antialias: true, alpha: true });
   trenderer.setPixelRatio( window.devicePixelRatio );
   trenderer.setSize( window.innerWidth, window.innerHeight );
   trenderer.xr.enabled = true;

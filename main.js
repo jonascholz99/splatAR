@@ -5,8 +5,23 @@ const scale = 1
 const movement_scale = 5
 const initial_z = 14
 
+// check path for local or github pages
+let basePath;
+
+// Überprüfe den Hostnamen
+if (window.location.hostname === "localhost") {  
+  basePath = "./splatAR/public/"; // Pfad für Localhost
+} else {
+  basePath = "./"; // Pfad für Server
+}
+
 let trenderer, xrRefSpace, tscene, tcamera;
 const renderer = new SPLAT.WebGLRenderer();
+
+// transparent background color
+let transparentColor = new SPLAT.Color32(0, 0, 0, 0);
+
+renderer.backgroundColor =transparentColor;
 const scene = new SPLAT.Scene();
 const camera = new SPLAT.Camera();
 
@@ -30,7 +45,7 @@ main();
 
 async function main() 
 {  
-  const url = "./splats/yona/yona_7000.splat";
+  const url = `${basePath}splats/yona/yona_7000.splat`;
   await SPLAT.Loader.LoadAsync(url, scene, () => {});
 
   const frame = () => {

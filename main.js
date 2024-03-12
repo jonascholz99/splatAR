@@ -17,14 +17,16 @@ if (window.location.hostname === "localhost") {
 
 let trenderer, xrRefSpace, tscene, tcamera;
 const renderer = new SPLAT.WebGLRenderer();
+renderer.domElement.style.background = "unset";
 
-// transparent background color
-let transparentColor = new SPLAT.Color32(0, 0, 0, 0);
-
-renderer.backgroundColor =transparentColor;
 const scene = new SPLAT.Scene();
 const camera = new SPLAT.Camera();
-
+camera._position = new SPLAT.Vector3(0, 0, 0);
+camera._rotation = new SPLAT.Quaternion();
+// camera.data.fx =  2232 / 4;
+// camera.data.fy =  2232 / 4;
+// camera.data.near =  0.03;
+// camera.data.far =  100;
 init();
 
 function onWindowResize() 

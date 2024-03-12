@@ -50,7 +50,7 @@ main();
 async function main() 
 {  
   const url = `${basePath}splats/yona/yona_7000.splat`;
-  const splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (console.log("Loading: " + progress * 100 + " %")));
+  const splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
   
   // Transform it  
   const rotation = new SPLAT.Vector3(0, 0, 0);
@@ -169,4 +169,14 @@ function onXRFrame(t, frame) {
   camera._rotation.y = -tcamera.quaternion.y;
   camera._rotation.z = -tcamera.quaternion.z;
   camera._rotation.w = tcamera.quaternion.w;
+}
+
+function updateLoadingProgress(progress) {  
+  var loadingProgressElement = document.getElementById('loadingProgress');
+  
+  loadingProgressElement.textContent = `Lädt... ${progress}%`;
+  
+  if (progress >= 100) {
+      loadingProgressElement.style.display = 'none';
+  }
 }

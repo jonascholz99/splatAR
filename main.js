@@ -17,7 +17,7 @@ if (window.location.hostname === "localhost") {
 
 let trenderer, xrRefSpace, tscene, tcamera;
 const renderer = new SPLAT.WebGLRenderer();
-renderer.domElement.style.background = "unset";
+renderer.backgroundColor = new SPLAT.Color32(0, 0, 0, 0);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const scene = new SPLAT.Scene();
@@ -25,10 +25,10 @@ scene.position = new SPLAT.Vector3(100, 0, 0);
 const camera = new SPLAT.Camera();
 camera._position = new SPLAT.Vector3(0, 0, 0);
 camera._rotation = new SPLAT.Quaternion();
-camera.fx =  2232 / 4;
-camera.fy =  2232 / 4;
-camera.near =  0.03;
-camera.far =  100;
+camera.data.fx =  2232 / 4;
+camera.data.fy =  2232 / 4;
+camera.data.near =  0.03;
+camera.data.far =  100;
 init();
 
 function onWindowResize() 
@@ -56,12 +56,12 @@ async function main()
   const rotation = new SPLAT.Vector3(0, 0, 0);
   const translation = new SPLAT.Vector3(-0.2, 0.2, 5);
   const scaling = new SPLAT.Vector3(1.5, 1.5, 1.5);
-  // splat.rotation = SPLAT.Quaternion.FromEuler(rotation);
-  // splat.position = translation;
-  // splat.scale = scaling;
-  // splat.applyPosition();
-  // splat.applyRotation();
-  // splat.applyScale();
+  splat.rotation = SPLAT.Quaternion.FromEuler(rotation);
+  splat.position = translation;
+  splat.scale = scaling;
+  splat.applyPosition();
+  splat.applyRotation();
+  splat.applyScale();
 
   const frame = () => {
     renderer.render(scene, camera);

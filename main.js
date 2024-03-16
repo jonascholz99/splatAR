@@ -93,7 +93,7 @@ function AR()
     };
     var sessionInit = getXRSessionInit( 'immersive-ar', {
       mode: 'immersive-ar',
-      referenceSpaceType: 'local', // 'local-floor'
+      referenceSpaceType: 'viewer', // 'local-floor'
       sessionInit: options
   });
   

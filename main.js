@@ -23,10 +23,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 const scene = new SPLAT.Scene();
 scene.position = new SPLAT.Vector3(0, 0, 0);
 const camera = new SPLAT.Camera();
-camera._position = new SPLAT.Vector3(0, -1.5, 6);
+camera._position = new SPLAT.Vector3(0, -1, -1);
 camera._rotation = new SPLAT.Quaternion();
-camera.data.fx =  2232 / 4;
-camera.data.fy =  2232 / 4;
+camera.data.fx =  2532 / 4;
+camera.data.fy =  2532 / 4;
 camera.data.near =  0.03;
 camera.data.far =  100;
 init();
@@ -52,15 +52,9 @@ async function main()
   const url = `${basePath}splats/yona/yona_7000_edit.splat`;
   const splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
   
-  // Transform it  
-  const rotation = new SPLAT.Vector3(0, 0, 0);
-  const translation = new SPLAT.Vector3(-0.2, 0.2, 5);
-  const scaling = new SPLAT.Vector3(1.5, 1.5, 1.5);
-  splat.rotation = SPLAT.Quaternion.FromEuler(rotation);
-  splat.position = translation;
+  // Transform it
+  const scaling = new SPLAT.Vector3(1, 1, 1);
   splat.scale = scaling;
-  splat.applyPosition();
-  splat.applyRotation();
   splat.applyScale();
 
   const frame = () => {
@@ -163,7 +157,7 @@ function onXRFrame(t, frame) {
 
   trenderer.render( tscene, tcamera );  
   camera._position.x = scale*movement_scale*tcamera.position.x;
-  camera._position.y = -scale*movement_scale*tcamera.position.y-1;
+  camera._position.y = -scale*movement_scale*tcamera.position.y;
   camera._position.z = -scale*movement_scale*tcamera.position.z-initial_z;
   camera._rotation.x = tcamera.quaternion.x;
   camera._rotation.y = -tcamera.quaternion.y;

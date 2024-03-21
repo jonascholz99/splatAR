@@ -143,31 +143,26 @@ function getXRSessionInit(mode, options) {
 
 function onXRFrame(t, frame) {
     const session = frame.session;
-    session.requestAnimationFrame(onXRFrame);
+    
     const baseLayer = session.renderState.baseLayer;
     const pose = frame.getViewerPose(xrRefSpace);
     
     trenderer.render( tscene, tcamera );
+    renderer.render(scene, camera);
+    
     camera._position.x = scale*movement_scale*tcamera.position.x;
     camera._position.y = -scale*movement_scale*tcamera.position.y-2;
     camera._position.z = -scale*movement_scale*tcamera.position.z-initial_z;
+    
+    camera._rotation.x = tcamera.quaternion.x;
+    camera._rotation.y = tcamera.quaternion.y;
+    camera._rotation.z = tcamera.quaternion.z;
+    camera._rotation.w = tcamera.quaternion.w;
+    
+    console.log(tcamera.quaternion);
+    console.log(camera.rotation);
 
-    // Hypothetisches Beispiel, überprüfen, wie du tatsächlich von Quaternion zu Euler und zurück konvertierst
-    let euler = new THREE.Euler().setFromQuaternion(tcamera.quaternion, 'XYZ');
-    euler.x /= 2;
-    euler.y /= 2;
-    euler.z /= 2;
-
-    let correctedQuaternion = new THREE.Quaternion().setFromEuler(euler);
-
-    // Jetzt correctedQuaternion für die SPLAT.Camera verwenden
-    camera._rotation.x = correctedQuaternion.x;
-    camera._rotation.y = correctedQuaternion.y;
-    camera._rotation.z = correctedQuaternion.z;
-    camera._rotation.w = correctedQuaternion.w;
-
-    console.log(camera.data._projectionMatrix)
-    renderer.render(scene, camera);
+    session.requestAnimationFrame(onXRFrame);
 }
 
 function updateLoadingProgress(progress) {

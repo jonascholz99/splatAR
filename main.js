@@ -153,11 +153,20 @@ function onXRFrame(t, frame) {
     camera._position.x = scale*movement_scale*tcamera.position.x;
     camera._position.y = -scale*movement_scale*tcamera.position.y-2;
     camera._position.z = -scale*movement_scale*tcamera.position.z-initial_z;
+
+    // Schritt 1: Konvertiere den Quaternion in Euler-Winkel
+    var euler = new THREE.Euler().setFromQuaternion(tcamera.quaternion, 'XYZ');
+
+    // Schritt 2: Halbiere den Y-Winkel
+    euler.y /= 2;
+
+    // Schritt 3: Konvertiere die Euler-Winkel zurück in einen Quaternion
+    var correctedQuaternion = new THREE.Quaternion().setFromEuler(euler);
     
-    camera._rotation.x = tcamera.quaternion.x;
-    camera._rotation.y = tcamera.quaternion.y;
-    camera._rotation.z = tcamera.quaternion.z;
-    camera._rotation.w = tcamera.quaternion.w;
+    camera._rotation.x = correctedQuaternion.x;
+    camera._rotation.y = -correctedQuaternion.y;
+    camera._rotation.z = correctedQuaternion.z;
+    camera._rotation.w = correctedQuaternion.w;
     
     console.log(tcamera.quaternion);
     console.log(camera.rotation);

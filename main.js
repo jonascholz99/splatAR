@@ -21,9 +21,9 @@ renderer.backgroundColor = new SPLAT.Color32(0, 0, 0, 0);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const scene = new SPLAT.Scene();
-scene.position = new SPLAT.Vector3(100, 0, 0);
+scene.position = new SPLAT.Vector3(0, 0, 0);
 const camera = new SPLAT.Camera();
-camera._position = new SPLAT.Vector3(0, 0, 0);
+camera._position = new SPLAT.Vector3(0, -1.5, 6);
 camera._rotation = new SPLAT.Quaternion();
 camera.data.fx =  2232 / 4;
 camera.data.fy =  2232 / 4;
@@ -49,7 +49,7 @@ main();
 
 async function main() 
 {  
-  const url = `${basePath}splats/yona/yona_7000.splat`;
+  const url = `${basePath}splats/yona/yona_7000_edit.splat`;
   const splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
   
   // Transform it  
@@ -93,7 +93,7 @@ function AR()
     };
     var sessionInit = getXRSessionInit( 'immersive-ar', {
       mode: 'immersive-ar',
-      referenceSpaceType: 'viewer', // 'local-floor'
+      referenceSpaceType: 'viewer', // 'local', 'local-floor'
       sessionInit: options
   });
   

@@ -50,7 +50,7 @@ main();
 
 async function main()
 {
-    const url = `${basePath}splats/yona/yona_7000_edit.splat`;
+    const url = `${basePath}splats/yona/yona_7000.splat`;
     splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
 }
 
@@ -66,7 +66,7 @@ function init() {
 function AR()
 {
     // Transform it
-    const scaling = new SPLAT.Vector3(20, 20, 20);
+    const scaling = new SPLAT.Vector3(5, 5, 5);
     splat.scale = scaling;
     splat.applyScale();
     

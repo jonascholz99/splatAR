@@ -2,7 +2,7 @@ import * as SPLAT from 'gsplat';
 import * as THREE from 'three';
 
 const scale = 1
-const movement_scale = 5
+const movement_scale = 10
 const initial_z = 0
 
 // check path for local or github pages
@@ -66,7 +66,7 @@ function init() {
 function AR()
 {
     // Transform it
-    const scaling = new SPLAT.Vector3(7, 7, 7);
+    const scaling = new SPLAT.Vector3(20, 20, 20);
     splat.scale = scaling;
     splat.applyScale();
     
@@ -159,9 +159,6 @@ function onXRFrame(t, frame) {
     camera._rotation.y = -tcamera.quaternion.y;
     camera._rotation.z = -tcamera.quaternion.z;
     camera._rotation.w = tcamera.quaternion.w;
-    
-    console.log(tscene.scale);
-    console.log(splat.scale);
 
     session.requestAnimationFrame(onXRFrame);
 }

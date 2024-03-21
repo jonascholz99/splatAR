@@ -21,7 +21,6 @@ renderer.backgroundColor = new SPLAT.Color32(0, 0, 0, 0);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const scene = new SPLAT.Scene();
-scene.position = new SPLAT.Vector3(0, 0, 0);
 const camera = new SPLAT.Camera();
 camera._position = new SPLAT.Vector3(0, -1, -1);
 camera._rotation = new SPLAT.Quaternion();
@@ -30,6 +29,8 @@ camera.data.fy =  2532 / 4;
 camera.data.near =  0.03;
 camera.data.far =  100;
 init();
+
+let splat;
 
 function onWindowResize()
 {
@@ -50,12 +51,7 @@ main();
 async function main()
 {
     const url = `${basePath}splats/yona/yona_7000_edit.splat`;
-    const splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
-    
-    // Transform it
-    const scaling = new SPLAT.Vector3(7, 7, 7);
-    splat.scale = scaling;
-    splat.applyScale();
+    splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
 }
 
 function init() {
@@ -69,6 +65,11 @@ function init() {
 
 function AR()
 {
+    // Transform it
+    const scaling = new SPLAT.Vector3(7, 7, 7);
+    splat.scale = scaling;
+    splat.applyScale();
+    
   var currentSession = null;
 
   if( currentSession == null )
@@ -153,23 +154,14 @@ function onXRFrame(t, frame) {
     camera._position.x = scale*movement_scale*tcamera.position.x;
     camera._position.y = -scale*movement_scale*tcamera.position.y-2;
     camera._position.z = -scale*movement_scale*tcamera.position.z-initial_z;
-
-    // Schritt 1: Konvertiere den Quaternion in Euler-Winkel
-    var euler = new THREE.Euler().setFromQuaternion(tcamera.quaternion, 'XYZ');
-
-    // Schritt 2: Halbiere den Y-Winkel
-    euler.y /= 2;
-
-    // Schritt 3: Konvertiere die Euler-Winkel zurück in einen Quaternion
-    var correctedQuaternion = new THREE.Quaternion().setFromEuler(euler);
     
-    camera._rotation.x = correctedQuaternion.x;
-    camera._rotation.y = -correctedQuaternion.y;
-    camera._rotation.z = correctedQuaternion.z;
-    camera._rotation.w = correctedQuaternion.w;
+    camera._rotation.x = tcamera.quaternion.x;
+    camera._rotation.y = -tcamera.quaternion.y;
+    camera._rotation.z = -tcamera.quaternion.z;
+    camera._rotation.w = tcamera.quaternion.w;
     
-    console.log(tcamera.quaternion);
-    console.log(camera.rotation);
+    console.log(tscene.scale);
+    console.log(splat.scale);
 
     session.requestAnimationFrame(onXRFrame);
 }

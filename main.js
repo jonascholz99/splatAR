@@ -53,7 +53,7 @@ async function main()
   const splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
   
   // Transform it
-  const scaling = new SPLAT.Vector3(1, 1, 1);
+  const scaling = new SPLAT.Vector3(4, 4, 4);
   splat.scale = scaling;
   splat.applyScale();
 

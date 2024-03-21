@@ -53,7 +53,7 @@ async function main()
   const splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
   
   // Transform it
-  const scaling = new SPLAT.Vector3(4, 4, 4);
+  const scaling = new SPLAT.Vector3(7, 7, 7);
   splat.scale = scaling;
   splat.applyScale();
 
@@ -157,7 +157,7 @@ function onXRFrame(t, frame) {
 
   trenderer.render( tscene, tcamera );  
   camera._position.x = scale*movement_scale*tcamera.position.x;
-  camera._position.y = -scale*movement_scale*tcamera.position.y;
+  camera._position.y = -scale*movement_scale*tcamera.position.y-2;
   camera._position.z = -scale*movement_scale*tcamera.position.z-initial_z;
   camera._rotation.x = tcamera.quaternion.x;
   camera._rotation.y = -tcamera.quaternion.y;

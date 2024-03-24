@@ -4,7 +4,7 @@ import { AxisProgram } from "./libs/programs/AxisProgram";
 import { GridProgram } from "./libs/programs/GridProgram";
 
 const scale = 1
-const movement_scale = 10
+const movement_scale = 6
 const initial_z = 0
 
 // check path for local or github pages
@@ -171,7 +171,7 @@ function onXRFrame(t, frame) {
     renderer.render(scene, camera);
     
     camera._position.x = scale*movement_scale*tcamera.position.x;
-    camera._position.y = -scale*movement_scale*tcamera.position.y-2;
+    camera._position.y = -scale*movement_scale*tcamera.position.y;
     camera._position.z = -scale*movement_scale*tcamera.position.z-initial_z;
     
     camera._rotation.x = tcamera.quaternion.x;

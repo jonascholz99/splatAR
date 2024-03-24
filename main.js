@@ -4,7 +4,7 @@ import { AxisProgram } from "./libs/programs/AxisProgram";
 import { GridProgram } from "./libs/programs/GridProgram";
 
 const scale = 1
-const movement_scale = 6
+const movement_scale = 2
 const initial_z = 0
 
 // check path for local or github pages

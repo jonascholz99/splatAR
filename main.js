@@ -31,8 +31,6 @@ let gridProgram = new GridProgram(renderer, []);
 
 const scene = new SPLAT.Scene();
 const camera = new SPLAT.Camera();
-camera._position = new SPLAT.Vector3(2, -1, -5);
-camera._rotation = SPLAT.Quaternion.FromEuler(new SPLAT.Vector3(-Math.PI/8, 0, 0));
 camera.data.fx =  2532 / 4;
 camera.data.fy =  2532 / 4;
 camera.data.near =  0.03;
@@ -62,8 +60,10 @@ async function main()
     const url = `${basePath}splats/yona/yona_7000.splat`;
     splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
     
+    splat.position = new SPLAT.Vector3(-1.5, -1, 0);
+    splat.applyPosition();
     // splat.rotation = SPLAT.Quaternion.FromEuler(new SPLAT.Vector3(0.4, 0, 0));
-    splat.applyRotation();
+    // splat.applyRotation();
     
     const frame = () => {
         renderer.render(scene, camera);

@@ -22,7 +22,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 const scene = new SPLAT.Scene();
 const camera = new SPLAT.Camera();
-camera._position = new SPLAT.Vector3(0, -1, -1);
+camera._position = new SPLAT.Vector3(2, 0, -5);
 camera._rotation = new SPLAT.Quaternion();
 camera.data.fx =  2532 / 4;
 camera.data.fy =  2532 / 4;
@@ -52,6 +52,13 @@ async function main()
 {
     const url = `${basePath}splats/yona/yona_7000.splat`;
     splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
+    
+    const frame = () => {
+        renderer.render(scene, camera);
+        requestAnimationFrame(frame);
+    }
+    
+    requestAnimationFrame(frame);
 }
 
 function init() {

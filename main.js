@@ -60,8 +60,10 @@ async function main()
     const url = `${basePath}splats/yona/yona_7000.splat`;
     splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
     
-    splat.position = new SPLAT.Vector3(-1.5, -1, 0);
+    splat.position = new SPLAT.Vector3(-2.5, -1, 2);
     splat.applyPosition();
+    splat.scale = new SPLAT.Vector3(3, 3, 3);
+    splat.applyScale();
     // splat.rotation = SPLAT.Quaternion.FromEuler(new SPLAT.Vector3(0.4, 0, 0));
     // splat.applyRotation();
     
@@ -84,11 +86,6 @@ function init() {
 
 function AR()
 {
-    // Transform it
-    const scaling = new SPLAT.Vector3(5, 5, 5);
-    splat.scale = scaling;
-    splat.applyScale();
-    
   var currentSession = null;
 
   if( currentSession == null )

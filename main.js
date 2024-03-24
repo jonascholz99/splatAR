@@ -57,10 +57,10 @@ main();
 
 async function main()
 {
-    const url = `${basePath}splats/yona/yona_7000.splat`;
+    const url = `${basePath}splats/yona/yona_7000_edit.splat`;
     splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
     
-    splat.position = new SPLAT.Vector3(-2.5, -1, 2);
+    splat.position = new SPLAT.Vector3(0, 1, 0);
     splat.applyPosition();
     splat.scale = new SPLAT.Vector3(3, 3, 3);
     splat.applyScale();

@@ -1,5 +1,7 @@
 import * as SPLAT from 'gsplat';
 import * as THREE from 'three';
+import { AxisProgram } from "./libs/programs/AxisProgram";
+import { GridProgram } from "./libs/programs/GridProgram";
 
 const scale = 1
 const movement_scale = 10
@@ -20,10 +22,17 @@ const renderer = new SPLAT.WebGLRenderer();
 renderer.backgroundColor = new SPLAT.Color32(0, 0, 0, 0);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+
+// Programs
+let toggleAxisVisibility = false;
+let axisProgram = new AxisProgram(renderer, []);
+let gridProgram = new GridProgram(renderer, []);
+
+
 const scene = new SPLAT.Scene();
 const camera = new SPLAT.Camera();
-camera._position = new SPLAT.Vector3(2, 0, -5);
-camera._rotation = new SPLAT.Quaternion();
+camera._position = new SPLAT.Vector3(2, -1, -5);
+camera._rotation = SPLAT.Quaternion.FromEuler(new SPLAT.Vector3(-Math.PI/8, 0, 0));
 camera.data.fx =  2532 / 4;
 camera.data.fy =  2532 / 4;
 camera.data.near =  0.03;
@@ -52,6 +61,9 @@ async function main()
 {
     const url = `${basePath}splats/yona/yona_7000.splat`;
     splat = await SPLAT.Loader.LoadAsync(url, scene, (progress) => (updateLoadingProgress(Math.round(progress * 100))));
+    
+    // splat.rotation = SPLAT.Quaternion.FromEuler(new SPLAT.Vector3(0.4, 0, 0));
+    splat.applyRotation();
     
     const frame = () => {
         renderer.render(scene, camera);
@@ -179,3 +191,17 @@ function updateLoadingProgress(progress) {
     loadingProgressElement.style.display = 'none';
   }
 }
+
+
+const axisButton = document.getElementById('toggleButton');
+axisButton.addEventListener('click', () => {
+    toggleAxisVisibility = !toggleAxisVisibility;
+    
+    if(toggleAxisVisibility) {
+        renderer.addProgram(axisProgram);
+        renderer.addProgram(gridProgram);
+    } else {
+        renderer.removeProgram(axisProgram);
+        renderer.removeProgram(gridProgram);
+    }
+});
